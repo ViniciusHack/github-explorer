@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -23,7 +24,8 @@ module.exports = {
         isDevelopment && new ReactRefreshWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public', 'index.html')
-        })
+        }),
+        new MiniCssExtractPlugin()
     ].filter(Boolean),
     module: {
         rules: [
@@ -40,9 +42,9 @@ module.exports = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.css$/,
                 exclude: /node_modules/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                use: ['style-loader', 'css-loader', 'postcss-loader']
             }
         ],
     }
